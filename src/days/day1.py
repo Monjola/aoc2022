@@ -1,4 +1,4 @@
-from file_parse import file_rows_to_list, list_of_strs_to_ints
+from src.utils.file_parse import file_rows_to_list, list_of_strs_to_ints
 
 calories = file_rows_to_list("src\days\input1.txt")
 
