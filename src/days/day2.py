@@ -1,4 +1,4 @@
-from file_parse import file_rows_to_list, list_of_strs_to_ints
+from file_parse import file_rows_to_list
 
 def generate_choice(opponents_choice: str,desired_outcome: str) -> str :
     possible_choices = ["X", "Y", "Z"]
@@ -40,8 +40,7 @@ def result_based_score(result: str) -> int:
         case "Z":
             return 6
 
-def part1(file:str) -> str:
-    input = file_rows_to_list(file)
+def part1(input:list) -> str:
     total_score = 0
     for row in input:
         temp_score = 0
@@ -78,8 +77,7 @@ def part1(file:str) -> str:
         total_score+=temp_score
     return total_score
 
-def part2(file:str) -> str:
-    input = file_rows_to_list(file)
+def part2(input:list) -> str:
     total_score = 0
     for row in input:
         choice = generate_choice(row[0],row[2])
@@ -98,6 +96,7 @@ def test_generate_choice():
     assert generate_choice("B","Z") == "Z", "expected Z got " + generate_choice("B","Z")
     assert generate_choice("C","Z") == "X", "expected X got " + generate_choice("C","Z")
 
-#test_generate_choice()
-print(part1("inputs\input2.txt"))
-print(part2("inputs\input2.txt"))
+if __name__ == "__main__":
+    input = file_rows_to_list("inputs\input2.txt")
+    print("part 1: " + str(part1(input)))
+    print("part 2: " + str(part2(input)))
