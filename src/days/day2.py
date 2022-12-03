@@ -1,4 +1,4 @@
-from file_parse import file_rows_to_list
+from src.utils.fileparse import file_rows_to_list
 
 def generate_choice(opponents_choice: str,desired_outcome: str) -> str :
     possible_choices = ["X", "Y", "Z"]
