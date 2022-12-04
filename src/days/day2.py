@@ -24,7 +24,7 @@ class Result(Enum):
     WIN = "Z"
 
 
-def generate_choice(opponents_choice: str, desired_outcome: str) -> str:
+def _generate_choice(opponents_choice: str, desired_outcome: str) -> str:
     possible_choices = [MyChoice.ROCK.value, MyChoice.PAPER.value, MyChoice.SCISSORS.value]
     
     match opponents_choice:
@@ -48,7 +48,7 @@ def generate_choice(opponents_choice: str, desired_outcome: str) -> str:
     return possible_choices[resulting_index]
 
 
-def choice_based_score(choice: str) -> int:
+def _choice_based_score(choice: str) -> int:
     match choice:
         case MyChoice.ROCK.value:
             return 1
@@ -58,7 +58,7 @@ def choice_based_score(choice: str) -> int:
             return 3
 
 
-def result_based_score(result: str) -> int:
+def _result_based_score(result: str) -> int:
     match result:
         case Result.LOSE.value:
             return 0
@@ -68,7 +68,7 @@ def result_based_score(result: str) -> int:
             return 6
 
 
-def outcome(opponents_choice:str,my_choice:str) -> str:
+def _outcome(opponents_choice:str,my_choice:str) -> str:
     match opponents_choice:
         case OpponentsChoice.ROCK.value:
             match my_choice:
@@ -103,9 +103,9 @@ def part1(strategy_guide: list) -> str:
     for instruction in strategy_guide:
         opponents_choice = instruction[0]
         my_choice = instruction[2]
-        temp_score = choice_based_score(my_choice)
-        result = outcome(opponents_choice, my_choice)
-        temp_score += result_based_score(result)
+        temp_score = _choice_based_score(my_choice)
+        result = _outcome(opponents_choice, my_choice)
+        temp_score += _result_based_score(result)
         total_score += temp_score
     return total_score
 
@@ -115,9 +115,9 @@ def part2(strategy_guide: list) -> str:
     for instruction in strategy_guide:
         opponents_choice = instruction[0]
         outcome = instruction[2]
-        choice = generate_choice(opponents_choice, outcome)
-        total_score += choice_based_score(choice)
-        total_score += result_based_score(outcome)
+        choice = _generate_choice(opponents_choice, outcome)
+        total_score += _choice_based_score(choice)
+        total_score += _result_based_score(outcome)
     return total_score
 
 
