@@ -1,6 +1,6 @@
 from enum import Enum
 
-from fileparse import file_rows_to_list
+from src.utils.fileparse import file_rows_to_list
 
 class MyChoice(Enum):
     ROCK = "X"
@@ -60,38 +60,43 @@ def result_based_score(result: str) -> int:
         case Result.WIN.value:
             return 6
 
+def outcome(opponents_choice:str,my_choice:str) -> str:
+    match opponents_choice:
+        case OpponentsChoice.ROCK.value:
+            match my_choice:
+                case MyChoice.ROCK.value:
+                    return Result.DRAW.value
+                case MyChoice.PAPER.value:
+                    return Result.WIN.value
+                case MyChoice.SCISSORS.value:
+                    return Result.LOSE.value
+
+        case OpponentsChoice.PAPER.value:
+            match my_choice:
+                case MyChoice.ROCK.value:
+                    return Result.LOSE.value
+                case MyChoice.PAPER.value:
+                    return Result.DRAW.value
+                case MyChoice.SCISSORS.value:
+                    return Result.WIN.value
+
+        case OpponentsChoice.SCISSORS.value:
+            match my_choice:
+                case MyChoice.ROCK.value:
+                    return Result.WIN.value
+                case MyChoice.PAPER.value:
+                    return Result.LOSE.value
+                case MyChoice.SCISSORS.value:
+                    return Result.DRAW.value
 
 def part1(input: list) -> str:
     total_score = 0
     for row in input:
-        temp_score = 0
         opponents_choice = row[0]
         my_choice = row[2]
-        match opponents_choice:
-            case OpponentsChoice.ROCK.value:
-                match my_choice:
-                    case MyChoice.ROCK.value:
-                        temp_score += 4
-                    case MyChoice.PAPER.value:
-                        temp_score += 8
-                    case MyChoice.SCISSORS.value:
-                        temp_score += 3
-            case OpponentsChoice.PAPER.value:
-                match my_choice:
-                    case MyChoice.ROCK.value:
-                        temp_score += 1
-                    case MyChoice.PAPER.value:
-                        temp_score += 5
-                    case MyChoice.SCISSORS.value:
-                        temp_score += 9
-            case OpponentsChoice.SCISSORS.value:
-                match my_choice:
-                    case MyChoice.ROCK.value:
-                        temp_score += 7
-                    case MyChoice.PAPER.value:
-                        temp_score += 2
-                    case MyChoice.SCISSORS.value:
-                        temp_score += 6
+        temp_score = choice_based_score(my_choice)
+        result = outcome(opponents_choice, my_choice)
+        temp_score += result_based_score(result)
         total_score += temp_score
     return total_score
 
@@ -99,9 +104,11 @@ def part1(input: list) -> str:
 def part2(input: list) -> str:
     total_score = 0
     for row in input:
-        choice = generate_choice(row[0], row[2])
+        opponents_choice = row[0]
+        outcome = row[2]
+        choice = generate_choice(opponents_choice, outcome)
         total_score += choice_based_score(choice)
-        total_score += result_based_score(row[2])
+        total_score += result_based_score(outcome)
     return total_score
 
 
