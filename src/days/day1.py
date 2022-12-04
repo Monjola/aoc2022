@@ -1,4 +1,4 @@
-from src.utils.fileparse import file_rows_to_list, list_of_strs_to_ints
+from src.days.fileparse import file_rows_to_list, list_of_strs_to_ints
 
 def parts_1_and_2(calories:list) -> int:
     total_calories = [0]

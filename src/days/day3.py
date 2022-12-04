@@ -1,4 +1,4 @@
-from src.utils.fileparse import file_rows_to_list
+from src.days.fileparse import file_rows_to_list
 
 def get_priority(item:str) -> int:
     if item.isupper():
