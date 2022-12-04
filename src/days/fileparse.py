@@ -1,5 +1,7 @@
+from typing import List
 
-def file_rows_to_list(file:str):
+
+def file_rows_to_list(file: str) -> object:
     with open(file,'r') as f:
         listl=[]
         for line in f:
@@ -7,7 +9,7 @@ def file_rows_to_list(file:str):
             listl.append(strip_lines)
         return listl
 
-def list_of_strs_to_ints(list_: list[str]) -> list[int]:
+def list_of_strs_to_ints(list_: list[str]) -> list[str]:
     for i,val in enumerate(list_):
         if val == '':
             list_[i] = 0

@@ -1,4 +1,6 @@
-from src.utils.fileparse import file_rows_to_list
+from typing import Tuple
+
+from src.days.fileparse import file_rows_to_list
 
 
 class Assignment:
@@ -7,52 +9,52 @@ class Assignment:
         self.end_id = end_id
 
 
-def fully_contains(assignment1:Assignment,assignment2:Assignment) -> bool:
-    if (assignment1.start_id <= assignment2.start_id) and (assignment1.end_id >= assignment2.end_id):    
+def fully_contains(assignment1: Assignment, assignment2: Assignment) -> bool:
+    if (assignment1.start_id <= assignment2.start_id) and (assignment1.end_id >= assignment2.end_id):
         return True
     elif (assignment2.start_id <= assignment1.start_id) and (assignment2.end_id >= assignment1.end_id):
         return True
-    else: 
+    else:
         return False
 
 
-def overlaps(assignment1:Assignment,assignment2:Assignment) -> bool:
+def overlaps(assignment1: Assignment, assignment2: Assignment) -> bool:
     if (assignment1.start_id <= assignment2.start_id) and (assignment1.end_id >= assignment2.start_id):
         return True
     elif (assignment2.start_id < assignment1.start_id) and (assignment2.end_id >= assignment1.start_id):
         return True
-    else: return False
+    else:
+        return False
 
-def split_assignments(assignment_pair:str) -> Assignment:
-    split_pairs = assignment_pair.split(",")
-    split_numbers =[]
-    split_numbers.append(split_pairs[0].split("-"))
-    split_numbers.append(split_pairs[1].split("-"))
-    assignment1 = Assignment(int(split_numbers[0][0]),int(split_numbers[0][1]))
-    assignment2 = Assignment(int(split_numbers[1][0]),int(split_numbers[1][1]))
+
+def split_assignments(assignment_pair: str) -> tuple[Assignment, Assignment]:
+    a,b = assignment_pair.split(",")
+    x0,y0 = map(int, a.split("-"))
+    x1,y1 = map(int, b.split("-"))
+    assignment1 = Assignment(x0, y0)
+    assignment2 = Assignment(x1, y1)
     return assignment1, assignment2
 
 
-def part1(input_file:list) -> int:
-    count=0
+def part1(input_file: list) -> int:
+    count = 0
     for line in input_file:
         assignment1, assignment2 = split_assignments(line)
         if fully_contains(assignment1, assignment2):
-            count+=1
+            count += 1
     return count
 
 
-def part2(input_file:list) -> int:
-    count=0
+def part2(input_file: list) -> int:
+    count = 0
     for line in input_file:
         assignment1, assignment2 = split_assignments(line)
         if overlaps(assignment1, assignment2):
-            count+=1
+            count += 1
     return count
 
 
 if __name__ == "__main__":
-    input_file = file_rows_to_list("inputs/input4.txt")
-    print("part1: " + str(part1(input_file)))
-    print("part2: " + str(part2(input_file)))
-    
+    file = file_rows_to_list("inputs/input4.txt")
+    print("part1: " + str(part1(file)))
+    print("part2: " + str(part2(file)))
