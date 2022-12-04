@@ -1,21 +1,28 @@
-from enum import Enum
+from enum import Enum, unique
 
 from src.utils.fileparse import file_rows_to_list
 
+
+@unique
 class MyChoice(Enum):
     ROCK = "X"
     PAPER = "Y"
     SCISSORS = "Z"
 
+
+@unique
 class OpponentsChoice(Enum):
     ROCK = "A"
     PAPER = "B"
     SCISSORS = "C"
 
+
+@unique
 class Result(Enum):
     LOSE = "X"
     DRAW = "Y"
     WIN = "Z"
+
 
 def generate_choice(opponents_choice: str, desired_outcome: str) -> str:
     possible_choices = [MyChoice.ROCK.value, MyChoice.PAPER.value, MyChoice.SCISSORS.value]
@@ -60,6 +67,7 @@ def result_based_score(result: str) -> int:
         case Result.WIN.value:
             return 6
 
+
 def outcome(opponents_choice:str,my_choice:str) -> str:
     match opponents_choice:
         case OpponentsChoice.ROCK.value:
@@ -89,11 +97,12 @@ def outcome(opponents_choice:str,my_choice:str) -> str:
                 case MyChoice.SCISSORS.value:
                     return Result.DRAW.value
 
-def part1(input: list) -> str:
+
+def part1(strategy_guide: list) -> str:
     total_score = 0
-    for row in input:
-        opponents_choice = row[0]
-        my_choice = row[2]
+    for instruction in strategy_guide:
+        opponents_choice = instruction[0]
+        my_choice = instruction[2]
         temp_score = choice_based_score(my_choice)
         result = outcome(opponents_choice, my_choice)
         temp_score += result_based_score(result)
@@ -101,11 +110,11 @@ def part1(input: list) -> str:
     return total_score
 
 
-def part2(input: list) -> str:
+def part2(strategy_guide: list) -> str:
     total_score = 0
-    for row in input:
-        opponents_choice = row[0]
-        outcome = row[2]
+    for instruction in strategy_guide:
+        opponents_choice = instruction[0]
+        outcome = instruction[2]
         choice = generate_choice(opponents_choice, outcome)
         total_score += choice_based_score(choice)
         total_score += result_based_score(outcome)
