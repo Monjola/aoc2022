@@ -1,6 +1,6 @@
-from src.utils.fileparse import file_rows_to_list
+from src.days.fileparse import file_rows_to_list
 
-def get_priority(item:str) -> int:
+def _get_priority(item:str) -> int:
     if item.isupper():
         return ord(item)-38
     else:
@@ -15,7 +15,7 @@ def part1(rucksacks:list) -> int:
 
         for item in first_half:
             if item in second_half:
-                value += get_priority(item)
+                value += _get_priority(item)
                 break
     return value
 
@@ -32,7 +32,7 @@ def part2(rucksacks:list) -> int:
     for group in grouped_list:
         for item in group[0]:
             if (item in group[1]) and (item in group[2]):
-                value += get_priority(item)
+                value += _get_priority(item)
                 break
     return value
 
