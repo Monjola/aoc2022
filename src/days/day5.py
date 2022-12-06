@@ -1,4 +1,6 @@
-from src.utils.fileparse import file_rows_to_list
+import re
+
+from fileparse import file_rows_to_list
 
 stacks = [  ["R","G","J","B","T","V","Z"],
             ["J","R","V","L"],
@@ -29,6 +31,17 @@ def get_answer():
             answer += stack.pop()
     print(answer)
 
+
+def parse(input: str):
+    pattern = re.compile(r'\[\d\]')
+    match = pattern.search(input)
+    print(match)
+    
+
+
+def part1_parse(input:list) -> str:
+    for row in input:
+        parse(row)
 def part1(input:list) -> str:
     for row in input:
         decoded_move = row.split(' ')
@@ -46,7 +59,9 @@ def part2(input:list) -> str:
         move_several(nr_of_crates,source_stack,goal_stack)
 
 if __name__ == '__main__':
-    input = file_rows_to_list("inputs\input5instructionsonly.txt")
+    #input = file_rows_to_list("inputs\input5instructionsonly.txt")
+    input = file_rows_to_list("inputs\input5stacksonly.txt")
+    part1_parse(input)
     #part1(input)
-    part2(input)
-    get_answer()
+    #part2(input)
+    #get_answer()
